@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Railway Reservation Form</title>
+
+    <style>
+      /* General Body and Font Styling */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #5b3dc7; /* Very light gray/off-white background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      /* Fieldset (The Container) Styling */
+      fieldset {
+        background-color: #84f64c; /* White background for the form itself */
+        font-family: Arial, sans-serif;
+        background-image: url("https://d12aarmt01l54a.cloudfront.net/cms/images/Media-20230301152109/1200-630.png"); /* <-- Replace with your actual image path or URL */
+        background-size: large;
+        background-position: center small;
+        background-repeat: repeat;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        border: 2px solid #d87cc4; /* Blue border for a clean, official look */
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        max-width: 600px;
+        width: 90%;
+      }
+
+      /* Legend and Title Styling */
+      legend {
+        text-align: center;
+        padding: 0 10px;
+      }
+
+      h1 {
+        color: #999936f8; /* A bright red/maroon color for the main title */
+        margin: 0;
+        font-size: 1.8em;
+        text-transform: uppercase;
+      }
+
+      /* Label and Input General Styling */
+      label {
+        display: inline-block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #290801; /* Darker text for readability */
+        width: 150px; /* Give labels a fixed width to align inputs */
+      }
+
+      input[type="text"],
+      input[type="tel"],
+      input[type="date"],
+      input[type="number"],
+      input[type="email"],
+      select {
+        padding: 10px;
+        border: 1px solid #ced4da; /* Light gray border */
+        border-radius: 5px;
+        width: calc(100% - 160px); /* Adjust width based on label width */
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #007bff; /* Highlight blue on focus */
+        outline: none;
+      }
+
+      /* Grouping Inputs on the same line */
+      .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      /* Radio button and Checkbox Specific Styling */
+      p {
+        font-weight: bold;
+        color: #fdfefe;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-top: 1px dashed #ced4da;
+        padding-top: 10px;
+      }
+
+      .gender-options label {
+        width: auto; /* Override fixed width for inline radio labels */
+        margin-right: 15px;
+        font-weight: normal;
+      }
+
+      /* Button Styling (Submit/Reset) */
+      input[type="submit"],
+      input[type="reset"] {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-right: 15px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      input[type="submit"] {
+        background-color: #28a745; /* Green for "Submit/Book" */
+        color: white;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+      }
+
+      input[type="reset"] {
+        background-color: #f30c04; /* Gray for "Reset" */
+        color: white;
+      }
+
+      input[type="reset"]:hover {
+        background-color: #f2f3f3;
+        transform: translateY(-2px);
+      }
+
+      /* Footer Styling */
+      footer {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px solid #ced4da;
+        text-align: center;
+        color: #fbfcfd;
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <legend>
+        <h1>Railway Reservation</h1>
+      </legend>
+      <form action="" method="post">
+        <div>
+          <label for="firstName">FIRST NAME</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="First name..."
+            required
+          />
+
+          <label for="lastName">LAST NAME</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Last name..."
+            required
+          />
+        </div>
+
+        <br />
+
+        <div>
+          <label for="journeyFrom">Journey From</label>
+          <input
+            type="text"
+            id="journeyFrom"
+            name="journeyFrom"
+            placeholder="Starting station..."
+            required
+          />
+
+          <label for="journeyTo">Journey To</label>
+          <input
+            type="text"
+            id="journeyTo"
+            name="journeyTo"
+            placeholder="Destination station..."
+            required
+          />
+        </div>
+
+        <br />
+
+        <label for="travelClass">Travel Class</label>
+        <select name="travelClass" id="travelClass" required>
+          <option value="" disabled selected>Select a class</option>
+          <option value="firstClass">First Class</option>
+          <option value="AC1Tier">AC 1 Tier</option>
+          <option value="AC2Tier">AC 2 Tier</option>
+          <option value="AC3Tier">AC 3 Tier</option>
+          <option value="sleeperClass">Sleeper Class</option>
+          <option value="general">General</option>
+        </select>
+
+        <br /><br />
+
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="01234-56789"
+          pattern="[0-9]{5}-[0-9]{5}"
+          required
+        />
+
+        <br /><br />
+
+        <label for="journeyDate">Journey Date</label>
+        <input type="date" id="journeyDate" name="journeyDate" required />
+
+        <br /><br />
+
+        <label for="age">AGE</label>
+        <input
+          type="number"
+          id="age"
+          name="age"
+          placeholder="Enter your age"
+          min="1"
+          max="120"
+          required
+        />
+
+        <br /><br />
+
+        <p>GENDER</p>
+        <div class="gender-options">
+          <label for="male">Male</label>
+          <input type="radio" name="gender" id="male" value="male" required />
+
+          <label for="female">Female</label>
+          <input type="radio" name="gender" id="female" value="female" />
+
+          <label for="other">Other</label>
+          <input type="radio" name="gender" id="other" value="other" />
+        </div>
+
+        <br />
+
+        <label for="email">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="example@domain.com"
+          required
+        />
+
+        <br /><br />
+
+        <input type="reset" value="Reset Form" />
+        <input type="submit" value="Book Ticket" />
+      </form>
+
+      <footer>
+        <small>Form created by: Shambhu Verma</small>
+      </footer>
+    </fieldset>
+  </body>
+</html>

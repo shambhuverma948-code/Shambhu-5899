@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Search</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #86e6fe;
+        }
+        .container{
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        h1{
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .search-box{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        input{
+            width: 350px;
+            padding: 14px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus{
+            border-color: #007bff;
+        }
+        button{
+            padding: 14px 22px;
+            font-size: 16px;
+            border: none;
+            background: #007bff;
+            cursor: pointer;
+            border-radius: 10px;
+            color: white;
+            transition: 0.3s;
+        }
+        button:hover{
+            background: #005ad3;
+        }
+        .grid{
+            margin-top:40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px;
+        }
+        .grid img{
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: fadeIn 0.5s forwards;
+        }
+        @keyframes fadeIn {
+            to{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .loading{
+            margin-top: 30px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Image Search</h1>
+        <div class="search-box">
+            <input type="text" id="query" placeholder="Search image">
+            <button onclick="generate()">Search</button>
+            <br><br>
+            <h2>GCRG gruop of intitutins bakshi ka Talab lucknow (up)</h2>
+        </div>
+        <div class="loading" id="loading"></div>
+        <div class="grid" id="image-container"></div>
+    </div>
+
+    <script>
+        const API_Key="R2EPS2N08d4X1k3SXfx6u8htY-lj_f6Yseb60MH2nts";
+
+        async function generate() {
+            const query=document.getElementById('query').value
+            const container=document.getElementById('image-container')
+            const loading=document.getElementById('loading')
+
+            if(!query.trim()) return alert("Please Enter Something")
+
+            container.innerHTML=''
+            loading.innerHTML='Fetching images ... Please wait'
+
+            try {
+                const res=await fetch(`https://api.unsplash.com/search/photos?query=${query}&client_id=${API_Key}`)
+                const data=await res.json()
+
+                loading.innerHTML=''
+
+                if(!data.results.length){
+                    container.innerHTML="<p>No Images Found</p>"
+                    return
+                }
+
+                data.results.forEach(img=>{
+                    container.innerHTML+=`<img src="${img.urls.small}" alt="${query}"/>`
+                })
+            }
+            catch (error) {
+                loading.innerHTML=''
+                alert("Something went wrong")
+            }
+        }
+    </script>
+</body>
+</html>
