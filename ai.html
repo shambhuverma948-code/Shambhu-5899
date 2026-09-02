@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Search</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #dff7ff 0%, #9ad9ff 45%, #7ec8ff 100%);
+            color: #1d1d1d;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 60px 20px 80px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: #0f172a;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: min(100%, 420px);
+            padding: 16px 18px;
+            font-size: 1rem;
+            border: 2px solid rgba(15, 23, 42, 0.12);
+            border-radius: 14px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 20px rgba(31, 41, 55, 0.08);
+            transition: 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+
+        button {
+            padding: 16px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            cursor: pointer;
+            border-radius: 14px;
+            color: #fff;
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(37, 99, 235, 0.42);
+        }
+
+        h2 {
+            margin: 20px auto 0;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: #1e293b;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .loading {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .grid {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .grid img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+            display: block;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transform: scale(0.96);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Image Search</h1>
+        <div class="search-box">
+            <input type="text" id="query" placeholder="Search image">
+            <button onclick="generate()">Search</button>
+        </div>
+        <h2>GCRG group of institutions, Bakshi Ka Talab, Lucknow (UP)</h2>
+        <div class="loading" id="loading"></div>
+        <div class="grid" id="image-container"></div>
+    </div>
+
+    <script>
+        const API_KEY = "R2EPS2N08d4X1k3SXfx6u8htY-lj_f6Yseb60MH2nts";
+
+        const queryInput = document.getElementById('query');
+        const container = document.getElementById('image-container');
+        const loading = document.getElementById('loading');
+        const searchButton = document.querySelector('button');
+
+        function showLoading(message) {
+            loading.textContent = message;
+        }
+
+        function renderImages(images, query) {
+            container.innerHTML = '';
+
+            if (!images.length) {
+                container.innerHTML = `<p>No images found for "${query}".</p>`;
+                return;
+            }
+
+            images.forEach((img) => {
+                const image = document.createElement('img');
+                image.src = img.urls.small;
+                image.alt = img.alt_description || query;
+                image.loading = 'lazy';
+                container.appendChild(image);
+            });
+        }
+
+        async function generate() {
+            const query = queryInput.value.trim();
+
+            if (!query) {
+                alert('Please enter something');
+                return;
+            }
+
+            container.innerHTML = '';
+            showLoading('Fetching images... Please wait');
+
+            try {
+                const res = await fetch(
+                    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=9&client_id=${API_KEY}`
+                );
+
+                if (!res.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await res.json();
+                showLoading('');
+                renderImages(data.results || [], query);
+            } catch (error) {
+                showLoading('');
+                alert('Something went wrong. Please try again.');
+                console.error(error);
+            }
+        }
+
+        searchButton.addEventListener('click', generate);
+
+        queryInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                generate();
+            }
+        });
+    </script>
+</body>
+</html>
