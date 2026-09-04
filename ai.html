@@ -1,203 +1,452 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Search</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #dff7ff 0%, #9ad9ff 45%, #7ec8ff 100%);
-            color: #1d1d1d;
-        }
+  <meta name="description" content="AI Image Search - Search and explore beautiful images with a modern responsive interface.">
 
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-            padding: 60px 20px 80px;
-        }
+  <title>AI Image Search | Shambhu Verma</title>
 
-        h1 {
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            color: #0f172a;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .search-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #243b7a, transparent 35%),
+        radial-gradient(circle at bottom right, #6c2bd9, transparent 35%),
+        #080b16;
+      color: #ffffff;
+    }
 
-        input {
-            width: min(100%, 420px);
-            padding: 16px 18px;
-            font-size: 1rem;
-            border: 2px solid rgba(15, 23, 42, 0.12);
-            border-radius: 14px;
-            outline: none;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 8px 20px rgba(31, 41, 55, 0.08);
-            transition: 0.3s ease;
-        }
+    header {
+      width: 100%;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      background: rgba(8,11,22,0.55);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-        input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-        }
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
 
-        button {
-            padding: 16px 28px;
-            font-size: 1rem;
-            font-weight: 700;
-            border: none;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            cursor: pointer;
-            border-radius: 14px;
-            color: #fff;
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+    .logo span {
+      color: #7dd3fc;
+    }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(37, 99, 235, 0.42);
-        }
+    .badge {
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: rgba(125,211,252,0.1);
+      border: 1px solid rgba(125,211,252,0.25);
+      color: #bae6fd;
+      font-size: 13px;
+    }
 
-        h2 {
-            margin: 20px auto 0;
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            color: #1e293b;
-            max-width: 800px;
-            line-height: 1.5;
-        }
+    main {
+      width: min(1150px, 92%);
+      margin: auto;
+      padding: 70px 0;
+    }
 
-        .loading {
-            margin-top: 30px;
-            font-size: 1.1rem;
-            color: #0f172a;
-            font-weight: 600;
-        }
+    .hero {
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+    }
 
-        .grid {
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 18px;
-        }
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.05;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #ffffff, #7dd3fc, #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .grid img {
-            width: 100%;
-            height: 230px;
-            object-fit: cover;
-            border-radius: 18px;
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
-            display: block;
-            border: 4px solid rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            transform: scale(0.96);
-            animation: fadeIn 0.5s forwards;
-        }
+    .hero p {
+      color: #aab3c5;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 35px;
+    }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-    </style>
+    .search-box {
+      display: flex;
+      gap: 12px;
+      max-width: 720px;
+      margin: auto;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-size: 16px;
+      padding: 15px;
+      min-width: 0;
+    }
+
+    .search-box input::placeholder {
+      color: #7f899d;
+    }
+
+    .search-box button {
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 0 25px;
+      font-weight: 700;
+      font-size: 15px;
+      background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+      color: white;
+      transition: 0.25s;
+    }
+
+    .search-box button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(99,102,241,0.35);
+    }
+
+    .search-box button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status {
+      text-align: center;
+      margin: 35px 0 20px;
+      min-height: 24px;
+      color: #aab3c5;
+    }
+
+    .gallery {
+      margin-top: 35px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.1);
+      min-height: 250px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 320px;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.06);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 20px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .card:hover .overlay {
+      opacity: 1;
+    }
+
+    .overlay a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #7f899d;
+      grid-column: 1 / -1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      color: #778196;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 60px;
+    }
+
+    @media (max-width: 800px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      header {
+        padding: 18px 5%;
+      }
+
+      main {
+        padding: 50px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .badge {
+        display: none;
+      }
+
+      .search-box {
+        flex-direction: column;
+        padding: 8px;
+      }
+
+      .search-box button {
+        height: 50px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .card img {
+        height: 280px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>AI Image Search</h1>
-        <div class="search-box">
-            <input type="text" id="query" placeholder="Search image">
-            <button onclick="generate()">Search</button>
-        </div>
-        <h2>GCRG group of institutions, Bakshi Ka Talab, Lucknow (UP)</h2>
-        <div class="loading" id="loading"></div>
-        <div class="grid" id="image-container"></div>
-    </div>
 
-    <script>
-        const API_KEY = "R2EPS2N08d4X1k3SXfx6u8htY-lj_f6Yseb60MH2nts";
+  <header>
+    <div class="logo">AI<span>Search</span></div>
+    <div class="badge">AI Image Explorer</div>
+  </header>
 
-        const queryInput = document.getElementById('query');
-        const container = document.getElementById('image-container');
-        const loading = document.getElementById('loading');
-        const searchButton = document.querySelector('button');
+  <main>
 
-        function showLoading(message) {
-            loading.textContent = message;
+    <section class="hero">
+      <h1>Discover Amazing Images</h1>
+
+      <p>
+        Search for beautiful and inspiring images using a clean,
+        fast and responsive image search experience.
+      </p>
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search images... e.g. nature, cars, mountains"
+          autocomplete="off"
+          aria-label="Search images"
+        >
+
+        <button id="searchBtn">
+          Search
+        </button>
+      </div>
+    </section>
+
+    <div class="status" id="status"></div>
+
+    <section class="gallery" id="gallery">
+      <div class="empty">
+        Search for something to discover beautiful images.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 Shambhu Verma • AI Image Search
+  </footer>
+
+
+  <script>
+    /*
+      IMPORTANT:
+      Do not put your Unsplash API secret directly in frontend code.
+
+      Replace this endpoint with your own backend/API proxy.
+
+      Example:
+      /api/images?query=nature
+    */
+
+    const API_URL = "/api/images";
+
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const gallery = document.getElementById("gallery");
+    const status = document.getElementById("status");
+
+
+    async function searchImages() {
+
+      const query = searchInput.value.trim();
+
+      if (!query) {
+        status.textContent = "Please enter something to search.";
+        searchInput.focus();
+        return;
+      }
+
+      searchBtn.disabled = true;
+      searchBtn.textContent = "Searching...";
+      status.textContent = "Finding beautiful images...";
+      gallery.innerHTML = "";
+
+      try {
+
+        const response = await fetch(
+          `${API_URL}?query=${encodeURIComponent(query)}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Unable to fetch images.");
         }
 
-        function renderImages(images, query) {
-            container.innerHTML = '';
+        const data = await response.json();
 
-            if (!images.length) {
-                container.innerHTML = `<p>No images found for "${query}".</p>`;
-                return;
-            }
+        const results = data.results || data;
 
-            images.forEach((img) => {
-                const image = document.createElement('img');
-                image.src = img.urls.small;
-                image.alt = img.alt_description || query;
-                image.loading = 'lazy';
-                container.appendChild(image);
-            });
+        if (!Array.isArray(results) || results.length === 0) {
+          gallery.innerHTML = `
+            <div class="empty">
+              No images found for "<strong>${escapeHTML(query)}</strong>".
+              <br><br>
+              Try another search.
+            </div>
+          `;
+
+          status.textContent = "";
+          return;
         }
 
-        async function generate() {
-            const query = queryInput.value.trim();
+        status.textContent = `${results.length} images found`;
 
-            if (!query) {
-                alert('Please enter something');
-                return;
-            }
+        results.forEach(image => {
 
-            container.innerHTML = '';
-            showLoading('Fetching images... Please wait');
+          const imageUrl =
+            image.urls?.regular ||
+            image.url ||
+            image.src;
 
-            try {
-                const res = await fetch(
-                    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=9&client_id=${API_KEY}`
-                );
+          const link =
+            image.links?.html ||
+            image.link ||
+            "#";
 
-                if (!res.ok) {
-                    throw new Error('API request failed');
-                }
+          if (!imageUrl) return;
 
-                const data = await res.json();
-                showLoading('');
-                renderImages(data.results || [], query);
-            } catch (error) {
-                showLoading('');
-                alert('Something went wrong. Please try again.');
-                console.error(error);
-            }
-        }
+          const card = document.createElement("article");
+          card.className = "card";
 
-        searchButton.addEventListener('click', generate);
+          card.innerHTML = `
+            <img
+              src="${escapeAttribute(imageUrl)}"
+              alt="${escapeAttribute(query)}"
+              loading="lazy"
+            >
 
-        queryInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                generate();
-            }
+            <div class="overlay">
+              <a
+                href="${escapeAttribute(link)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Image ↗
+              </a>
+            </div>
+          `;
+
+          gallery.appendChild(card);
         });
-    </script>
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent = "";
+
+        gallery.innerHTML = `
+          <div class="empty">
+            <h3>Something went wrong</h3>
+            <br>
+            <p>
+              Image search is currently unavailable.
+              Please check your API/backend connection.
+            </p>
+          </div>
+        `;
+
+      } finally {
+
+        searchBtn.disabled = false;
+        searchBtn.textContent = "Search";
+      }
+    }
+
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    function escapeAttribute(value) {
+      return escapeHTML(value);
+    }
+
+
+    searchBtn.addEventListener("click", searchImages);
+
+
+    searchInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        searchImages();
+      }
+    });
+  </script>
+
 </body>
 </html>
