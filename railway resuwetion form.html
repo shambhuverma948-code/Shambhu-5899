@@ -1,278 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Railway Reservation Form</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-      /* General Body and Font Styling */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #5b3dc7; /* Very light gray/off-white background */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
+  <title>Railway Reservation</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 40px 15px;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    }
+
+    .container {
+      width: min(800px, 100%);
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 25px 70px #0008;
+    }
+
+    .top {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .top h1 {
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .top p {
+      color: #64748b;
+    }
+
+    .home {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px #2563eb22;
+    }
+
+    .gender {
+      display: flex;
+      gap: 20px;
+      padding-top: 5px;
+    }
+
+    .gender label {
+      font-weight: normal;
+    }
+
+    .gender input {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .reset {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .reset:hover {
+      background: #cbd5e1;
+    }
+
+    #message {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #dcfce7;
+      color: #166534;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 18px;
       }
 
-      /* Fieldset (The Container) Styling */
-      fieldset {
-        background-color: #84f64c; /* White background for the form itself */
-        font-family: Arial, sans-serif;
-        background-image: url("https://d12aarmt01l54a.cloudfront.net/cms/images/Media-20230301152109/1200-630.png"); /* <-- Replace with your actual image path or URL */
-        background-size: large;
-        background-position: center small;
-        background-repeat: repeat;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        border: 2px solid #d87cc4; /* Blue border for a clean, official look */
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-        max-width: 600px;
-        width: 90%;
+      .row {
+        grid-template-columns: 1fr;
       }
+    }
+  </style>
+</head>
 
-      /* Legend and Title Styling */
-      legend {
-        text-align: center;
-        padding: 0 10px;
-      }
+<body>
 
-      h1 {
-        color: #999936f8; /* A bright red/maroon color for the main title */
-        margin: 0;
-        font-size: 1.8em;
-        text-transform: uppercase;
-      }
+<div class="container">
 
-      /* Label and Input General Styling */
-      label {
-        display: inline-block;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #290801; /* Darker text for readability */
-        width: 150px; /* Give labels a fixed width to align inputs */
-      }
+  <a href="index.html" class="home">← Back to Home</a>
 
-      input[type="text"],
-      input[type="tel"],
-      input[type="date"],
-      input[type="number"],
-      input[type="email"],
-      select {
-        padding: 10px;
-        border: 1px solid #ced4da; /* Light gray border */
-        border-radius: 5px;
-        width: calc(100% - 160px); /* Adjust width based on label width */
-        box-sizing: border-box;
-        transition: border-color 0.3s;
-      }
+  <div class="top">
+    <h1>🚆 Railway Reservation</h1>
+    <p>Enter passenger and journey details</p>
+  </div>
 
-      input:focus,
-      select:focus {
-        border-color: #007bff; /* Highlight blue on focus */
-        outline: none;
-      }
+  <form id="reservationForm">
 
-      /* Grouping Inputs on the same line */
-      .input-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-      }
+    <div class="row">
 
-      /* Radio button and Checkbox Specific Styling */
-      p {
-        font-weight: bold;
-        color: #fdfefe;
-        margin-top: 20px;
-        margin-bottom: 10px;
-        border-top: 1px dashed #ced4da;
-        padding-top: 10px;
-      }
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          required
+          placeholder="Enter first name"
+        >
+      </div>
 
-      .gender-options label {
-        width: auto; /* Override fixed width for inline radio labels */
-        margin-right: 15px;
-        font-weight: normal;
-      }
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          required
+          placeholder="Enter last name"
+        >
+      </div>
 
-      /* Button Styling (Submit/Reset) */
-      input[type="submit"],
-      input[type="reset"] {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        margin-right: 15px;
-        transition: background-color 0.3s, transform 0.2s;
-      }
+    </div>
 
-      input[type="submit"] {
-        background-color: #28a745; /* Green for "Submit/Book" */
-        color: white;
-      }
+    <div class="row">
 
-      input[type="submit"]:hover {
-        background-color: #218838;
-        transform: translateY(-2px);
-      }
+      <div class="field">
+        <label for="from">Journey From</label>
+        <input
+          type="text"
+          id="from"
+          required
+          placeholder="Starting station"
+        >
+      </div>
 
-      input[type="reset"] {
-        background-color: #f30c04; /* Gray for "Reset" */
-        color: white;
-      }
+      <div class="field">
+        <label for="to">Journey To</label>
+        <input
+          type="text"
+          id="to"
+          required
+          placeholder="Destination station"
+        >
+      </div>
 
-      input[type="reset"]:hover {
-        background-color: #f2f3f3;
-        transform: translateY(-2px);
-      }
+    </div>
 
-      /* Footer Styling */
-      footer {
-        margin-top: 20px;
-        padding-top: 10px;
-        border-top: 1px solid #ced4da;
-        text-align: center;
-        color: #fbfcfd;
-      }
-    </style>
-  </head>
-  <body>
-    <fieldset>
-      <legend>
-        <h1>Railway Reservation</h1>
-      </legend>
-      <form action="" method="post">
-        <div>
-          <label for="firstName">FIRST NAME</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="First name..."
-            required
-          />
+    <div class="row">
 
-          <label for="lastName">LAST NAME</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Last name..."
-            required
-          />
-        </div>
+      <div class="field">
+        <label for="date">Journey Date</label>
+        <input type="date" id="date" required>
+      </div>
 
-        <br />
+      <div class="field">
+        <label for="class">Travel Class</label>
 
-        <div>
-          <label for="journeyFrom">Journey From</label>
-          <input
-            type="text"
-            id="journeyFrom"
-            name="journeyFrom"
-            placeholder="Starting station..."
-            required
-          />
-
-          <label for="journeyTo">Journey To</label>
-          <input
-            type="text"
-            id="journeyTo"
-            name="journeyTo"
-            placeholder="Destination station..."
-            required
-          />
-        </div>
-
-        <br />
-
-        <label for="travelClass">Travel Class</label>
-        <select name="travelClass" id="travelClass" required>
-          <option value="" disabled selected>Select a class</option>
-          <option value="firstClass">First Class</option>
-          <option value="AC1Tier">AC 1 Tier</option>
-          <option value="AC2Tier">AC 2 Tier</option>
-          <option value="AC3Tier">AC 3 Tier</option>
-          <option value="sleeperClass">Sleeper Class</option>
-          <option value="general">General</option>
+        <select id="class" required>
+          <option value="">Select class</option>
+          <option>Sleeper</option>
+          <option>AC 3 Tier</option>
+          <option>AC 2 Tier</option>
+          <option>AC 1 Tier</option>
+          <option>General</option>
         </select>
+      </div>
 
-        <br /><br />
+    </div>
 
+    <div class="row">
+
+      <div class="field">
         <label for="phone">Phone Number</label>
         <input
           type="tel"
           id="phone"
-          name="phone"
-          placeholder="01234-56789"
-          pattern="[0-9]{5}-[0-9]{5}"
+          pattern="[0-9]{10}"
+          maxlength="10"
           required
-        />
+          placeholder="10-digit number"
+        >
+      </div>
 
-        <br /><br />
-
-        <label for="journeyDate">Journey Date</label>
-        <input type="date" id="journeyDate" name="journeyDate" required />
-
-        <br /><br />
-
-        <label for="age">AGE</label>
-        <input
-          type="number"
-          id="age"
-          name="age"
-          placeholder="Enter your age"
-          min="1"
-          max="120"
-          required
-        />
-
-        <br /><br />
-
-        <p>GENDER</p>
-        <div class="gender-options">
-          <label for="male">Male</label>
-          <input type="radio" name="gender" id="male" value="male" required />
-
-          <label for="female">Female</label>
-          <input type="radio" name="gender" id="female" value="female" />
-
-          <label for="other">Other</label>
-          <input type="radio" name="gender" id="other" value="other" />
-        </div>
-
-        <br />
-
-        <label for="email">E-mail</label>
+      <div class="field">
+        <label for="email">Email</label>
         <input
           type="email"
           id="email"
-          name="email"
-          placeholder="example@domain.com"
           required
-        />
+          placeholder="example@email.com"
+        >
+      </div>
 
-        <br /><br />
+    </div>
 
-        <input type="reset" value="Reset Form" />
-        <input type="submit" value="Book Ticket" />
-      </form>
+    <div class="field">
 
-      <footer>
-        <small>Form created by: Shambhu Verma</small>
-      </footer>
-    </fieldset>
-  </body>
+      <label>Gender</label>
+
+      <div class="gender">
+
+        <label>
+          <input type="radio" name="gender" value="Male" required>
+          Male
+        </label>
+
+        <label>
+          <input type="radio" name="gender" value="Female">
+          Female
+        </label>
+
+        <label>
+          <input type="radio" name="gender" value="Other">
+          Other
+        </label>
+
+      </div>
+
+    </div>
+
+    <button type="submit">
+      Book Ticket
+    </button>
+
+    <button type="reset" class="reset">
+      Reset Form
+    </button>
+
+  </form>
+
+  <div id="message"></div>
+
+</div>
+
+<script>
+
+  const form = document.getElementById("reservationForm");
+  const message = document.getElementById("message");
+  const dateInput = document.getElementById("date");
+
+  const today = new Date().toISOString().split("T")[0];
+  dateInput.min = today;
+
+  form.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const firstName =
+      document.getElementById("firstName").value.trim();
+
+    const lastName =
+      document.getElementById("lastName").value.trim();
+
+    const from =
+      document.getElementById("from").value.trim();
+
+    const to =
+      document.getElementById("to").value.trim();
+
+    message.style.display = "block";
+
+    message.textContent =
+      `✅ Reservation request submitted for ${firstName} ${lastName}: ${from} → ${to}.`;
+
+  });
+
+</script>
+
+</body>
 </html>
