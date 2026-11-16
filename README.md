@@ -1,65 +1,33 @@
-# Shambhu-5899
-# 🚀 Shambhu-5899
+# Shambhu Verma — Portfolio
 
-A collection of my web development projects built using HTML, CSS and JavaScript.
+Welcome to my personal portfolio repository. I am a final-year B.Tech Computer Science and Engineering student at G.C.R.G. Group of Institutions, Lucknow (AKTU), building skills in web development, Python, and data analytics.
 
-## 👨‍💻 About
+## Live portfolio
 
-Hi, I'm Shambhu Verma, a Computer Science Engineering student interested in web development, Python and data-related technologies.
+After enabling GitHub Pages, the site will be available at:
 
-This repository contains practical projects created while learning and improving my development skills.
+`https://shambhuverma948-code.github.io/Shambhu-5899/`
 
-## 📌 Projects
+## Featured projects
 
-### 🤖 AI Image Search
+- **AI Image Search** — [Open project](Ai%20generator.html)
+- **Railway Reservation Form** — [Open project](railway%20resuwetion%20form.html)
+- **Order Management System** — [Open project](order%20management%20system.html)
 
-A modern and responsive image search interface.
+## Tech stack
 
-**Technologies:**
-- HTML
-- CSS
-- JavaScript
-- Image Search API
+HTML · CSS · JavaScript · Python (learning) · Git · GitHub · VS Code
 
-### 🚆 Railway Reservation
+## Run locally
 
-A responsive railway reservation form for entering passenger and journey details.
+1. Clone or download this repository.
+2. Open the folder in VS Code.
+3. Open `index.html` in a browser, or use the VS Code Live Server extension.
 
-**Features:**
-- Passenger information
-- Journey details
-- Travel class
-- Date validation
-- Form validation
-- Responsive design
+## Connect
 
-### 📦 Order Management System
+- GitHub: [shambhuverma948-code](https://github.com/shambhuverma948-code)
+- Email: shambhuverma948@gmail.com
 
-A simple order management dashboard.
-
-**Features:**
-- Order statistics
-- Customer orders
-- Order status
-- Add new orders
-- Responsive dashboard
-
-## 🛠️ Technologies
-
-- HTML5
-- CSS3
-- JavaScript
-- Git
-- GitHub
-- REST API
-
-## 📂 Project Structure
-
-```text
-Shambhu-5899/
-│
-├── index.html
-├── Ai generator.html
-├── railway resuwetion form.html
-├── order management system.html
-└── README.md
+---
+Made with care by Shambhu Verma.
